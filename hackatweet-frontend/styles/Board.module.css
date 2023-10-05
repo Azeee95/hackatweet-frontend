@@ -1,0 +1,29 @@
+/* ligne séparatice d'éléments color : #3C454F */
+
+.main {
+    min-height: 100vh;
+    width: 100vw;
+    padding: 0;
+    background-color: #151D26;
+    display: flex;
+    flex-direction: row;
+  }
+
+.left{
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.center{
+    width: 45%;
+}
+
+.message{
+    width: 90%;
+}
+
+.right{
+    width: 30%;
+}

@@ -1,7 +1,7 @@
 import Board from '../components/Board';
 
-function Board() {
+function BoardPage() {
   return <Board />;
 }
 
-export default Index;
+export default BoardPage;

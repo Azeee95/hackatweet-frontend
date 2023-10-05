@@ -5,13 +5,14 @@ import SigninModal from './SigninModal';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 //adresse backend https://hackatweet-backend-rho.vercel.app/
+import Link from 'next/link'
 
 
 
 function Home() {
   const dispatch = useDispatch()
 
-  //sign-up dependancies
+  //sign-up functions
   const [firstname, setFirstname] = useState('')
   const [usernameUp, setUsernameUp] = useState('')
   const [passwordUp, setPasswordUp] = useState('')
@@ -28,13 +29,15 @@ function Home() {
       .then(data=>{
          if (data) {
              dispatch(login({ username: usernameUp, token: data.token }));
+             setFirstname('')
              setSignUpUsername('');
              setSignUpPassword('');
+             
          }
  
      })
  }
-
+//signIn functions
  const [username, setUsername] = useState('');
  const [password, setPassword] = useState('');
  
