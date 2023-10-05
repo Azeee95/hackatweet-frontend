@@ -1,44 +1,49 @@
 import styles from '../styles/Home.module.css';
 import Image from 'next/image'
-import SignupModal from './SignupModal';
-import SigninModal from './SigninModal';
+// import SignupModal from './SignupModal';
+// import SigninModal from './SigninModal';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { login } from '../reducers/user'
 //adresse backend https://hackatweet-backend-rho.vercel.app/
-import Link from 'next/link'
-
+// import Link from 'next/link'
+import { useRouter } from 'next/router';
 
 
 function Home() {
   const dispatch = useDispatch()
-
+  const router = useRouter()
   //sign-up functions
   const [firstname, setFirstname] = useState('')
-  const [usernameUp, setUsernameUp] = useState('')
+  const [emailUp, setEmailUp] = useState('')
   const [passwordUp, setPasswordUp] = useState('')
 
   const handleSignup = () => {
+    console.log(firstname)
+    console.log(emailUp)
+    console.log(passwordUp)
       fetch('https://hackatweet-backend-rho.vercel.app/users/signup',
       {
          method : 'POST',
          headers : {'Content-Type' : 'application/json'},
-         body: JSON.stringify({firstname, usernameUp, passwordUp})
+         body: JSON.stringify({firstname, email : emailUp, password : passwordUp})
       }
       )
       .then(res=>res.json())
       .then(data=>{
-         if (data) {
-             dispatch(login({ username: usernameUp, token: data.token }));
+         if (data[1].token) {
+            console.log(data)
+             dispatch(login({ email: data[1].email, token: data[1].token }));
              setFirstname('')
-             setSignUpUsername('');
-             setSignUpPassword('');
-             
-         }
+             setEmailUp('');
+             setPasswordUp('');
+             router.push('/board')
+            }
  
      })
  }
 //signIn functions
- const [username, setUsername] = useState('');
+ const [email, setEmail] = useState('');
  const [password, setPassword] = useState('');
  
  const handleSignin = () => {
@@ -46,35 +51,20 @@ function Home() {
       {
          method : 'POST',
          headers : {'Content-Type' : 'application/json'},
-         body: JSON.stringify({username, password})
+         body: JSON.stringify({email, password})
       }
       )
       .then(res=>res.json())
       .then(data=>{
          if(data) {
-             dispatch(login({ username: username, token: data.token }));
-             setSignUpUsername('');
-             setSignUpPassword('');
+             dispatch(login({ email, token: data.token }));
+             setEmail('');
+             setPassword('');
+             router.push('/board')
          }
  
      }   )
  }
-
-  // const [signUpModalVisible, setsignUpModalVisible] = useState(false)
-  // const [signInModalVisible, setsignInModalVisible] = useState(false)
-  
-  // const showSignupModal=()=>{
-  //   console.log('clic , turn visible')
-  //   setsignUpModalVisible(!signUpModalVisible)
-  //   console.log('signupVisible? :',signUpModalVisible)
-  // }
-  
-  // const showSigninModal=()=>{
-  //   setsignInModalVisible(!signInModalVisible)
-  // }
-
-  //   const signIn = <SigninModal ={signInModalVisible}/>
-    // const signUp = <SignupModal isSignupVisible={ signUpModalVisible}/> 
 
 
   return (
@@ -105,15 +95,15 @@ function Home() {
         </div>
 
         <div className={styles.signupFields}>
-          <h2>Sign Up</h2>
+          <h2>Sign up :</h2>
           <input type='text' placeholder='Firstname' onChange={ (e) =>setFirstname(e.target.value)} value={firstname}/>
-          <input type='text' placeholder='Username' onChange={ (e) =>setUsernameUp(e.target.value)} value={usernameUp}/>
+          <input type='email' placeholder='Email' onChange={ (e) =>setEmailUp(e.target.value)} value={emailUp}/>
           <input type='password' placeholder='Password' onChange={ (e) =>setPasswordUp(e.target.value)} value={passwordUp}/>
         </div>
 
         <div> 
-          <h2>Sign Up</h2>
-          <input type='text' placeholder='Username' onChange={ (e) =>setUsername(e.target.value)} value={username}/>
+          <h2>Sign in :</h2>
+          <input type='email' placeholder='Email' onChange={ (e) =>setEmail(e.target.value)} value={email}/>
           <input type='password' placeholder='Password' onChange={ (e) =>setPassword(e.target.value)} value={password}/>
         </div>
 
