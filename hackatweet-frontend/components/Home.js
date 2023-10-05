@@ -56,8 +56,8 @@ function Home() {
       )
       .then(res=>res.json())
       .then(data=>{
-         if(data) {
-             dispatch(login({ email, token: data.token }));
+         if(data[1].token) {
+             dispatch(login({ email, token: data[1].token }));
              setEmail('');
              setPassword('');
              router.push('/board')
