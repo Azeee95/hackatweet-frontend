@@ -2,13 +2,12 @@ import styles from '../styles/Home.module.css';
 import Image from 'next/image'
 // import SignupModal from './SignupModal';
 // import SigninModal from './SigninModal';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../reducers/user'
 //adresse backend https://hackatweet-backend-rho.vercel.app/
 // import Link from 'next/link'
 import { useRouter } from 'next/router';
-
 
 function Home() {
   const dispatch = useDispatch()
@@ -68,7 +67,8 @@ function Home() {
 
 
   return (
-    <div>      
+
+    <div>     
       <main className={styles.main}>
 
       <div className={styles.left}>
@@ -92,6 +92,7 @@ function Home() {
           <button className={styles.signup} onClick={()=>handleSignup()}>Sign up</button>
           <p className={styles.acc}>Already have an account?</p>
           <button className={styles.signin} onClick={()=>handleSignin()}>Sign in</button>
+        
         </div>
 
         <div className={styles.signupFields}>
@@ -110,6 +111,7 @@ function Home() {
       </div>
       </main>
     </div>
+    
   );
 }
 
