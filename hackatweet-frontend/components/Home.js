@@ -31,7 +31,7 @@ function Home() {
       )
       .then(res=>res.json())
       .then(data=>{
-         if (data[1].token) {
+         if (data[0].type === 'success' ) {
             console.log(data)
              dispatch(login({ email: data[1].email, token: data[1].token }));
              setFirstname('')
@@ -42,6 +42,7 @@ function Home() {
  
      })
  }
+ 
 //signIn functions
  const [email, setEmail] = useState('');
  const [password, setPassword] = useState('');
@@ -56,7 +57,7 @@ function Home() {
       )
       .then(res=>res.json())
       .then(data=>{
-         if(data[1].token) {
+         if(data[0].type === 'success' ) {
              dispatch(login({ email, token: data[1].token }));
              setEmail('');
              setPassword('');

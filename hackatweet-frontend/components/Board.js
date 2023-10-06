@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import {logout} from '../reducers/user'
 import Tweet from './Tweet';
 import Link from 'next/link'
+import {addTweet} from '../reducers/tweets'
 
 
 import Hashtags from './hashtags';
@@ -16,14 +17,13 @@ function Board() {
 const router = useRouter()
 const dispatch= useDispatch()
 const user= useSelector(state=>state.user.value)
-//redirection si non loggé
-if(!user.token){router.push('/')}
+const tweetsData = useSelector(state=>state.tweets)
 
 const [msg, setMsg] = useState('')
-const [tweetsData, setTweetsData] = useState([])
 const [error, setError] = useState('');
-const userFrame=<div>    
 
+
+const userFrame=<div>    
         <Image 
                 src='/logo.png'
                 width={50}
@@ -32,34 +32,35 @@ const userFrame=<div>
         />
 
         <div>
-            <h2>${user.email}</h2>
-            <p>@{user.firstname}</p>
+            <h2>{user.email}</h2>
+            <p> {user.firstname}</p>
         </div>
     </div>
 
 //on mount => fetch all tweets & store them in into tweetsData state
 useEffect(()=>{
+    // if(!user.token){router.push('/')}
+
     fetch('https://hackatweet-backend-rho.vercel.app/tweets')
     .then(response=>response.json())
     .then(data=>{
         const newData = data.slice(1)
-        setTweetsData(newData)   
+        newData.map(e=>dispatch(addTweet(e)))
     })  
 },[])
 
-const tweets = tweetsData.map((data,i)=>      
+const tweets = tweetsData.value.map((data,i)=>      
 {
     //isLikedByUser={isLikedByUser} add this bellow when liking handled
   return <Tweet key={i} {...data} />;
 })
 
 const handleLogout=()=>{
-    console.log('logout clicked')
     dispatch(logout())
     router.push('/')
 }
 
-// à modifier, actuellement bloque totalement le champ lors du dépassement de la limite
+// à modifier, actuellement bloque totalement le champ lors du dépassement de la limite, gère le changement de texte dans l'input & limite à 280 caractères
 const handleMsgChange = (event) => {
     const text = event.target.value;
 
@@ -72,20 +73,27 @@ const handleMsgChange = (event) => {
   };
 const message = <input onChange={handleMsgChange} value={msg} className={styles.message} placeholder={'Type your amazing ideas to share with the world, make it short tho'}/>
 
-//ajout d'un tweet en passant le contenu de l'input
+//ajout d'un tweet en DB en passant le mail et le message + ajout au reducer tweets du tweet
 const handleAddTweet= (message) =>{
     if(user.token){
-        fetch('https://hackatweet-backend-rho.vercel.app/tweets/'),
+        fetch('https://hackatweet-backend-rho.vercel.app/tweets/add'),
           {
              method : 'POST',
              headers : {'Content-Type' : 'application/json'},
              body: JSON.stringify({user :user.email, message})
           }
         .then(res=>res.json())
-        .then(data=>console.log(data))
+        .then(data=>{
+            if(data[0].type === 'success'){
+                console.log(data[3])
+                dispatch(addTweet(data[3]))
+            }
+        })
     }
 }
-    console.log(user)
+    console.log('tweets : ',tweets)
+    // console.log(user)
+
   return (
     <main className={styles.main}>
         <div className={styles.left}>
