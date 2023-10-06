@@ -110,7 +110,7 @@ const handleAddTweet = (message) =>{
         </Link>
             <div>
                 {userFrame}
-                <button onClick={()=>handleLogout()}>Logout</button>
+                <button onClick={()=>handleLogout()} className={styles.tweetBtn}>Logout</button>
             </div>
         </div>
         <div className={styles.middle}>
