@@ -10,6 +10,7 @@ import { login } from '../reducers/user'
 import { useRouter } from 'next/router';
 
 function Home() {
+
   const dispatch = useDispatch()
   const router = useRouter()
   //sign-up functions
@@ -110,6 +111,7 @@ function Home() {
         </div>
 
       </div>
+
       </main>
     </div>
     
