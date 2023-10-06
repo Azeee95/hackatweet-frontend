@@ -11,7 +11,6 @@ import {addTweet} from '../reducers/tweets'
 
 import Hashtags from './hashtags';
 
-
 function Board() {
 
 const router = useRouter()
@@ -95,6 +94,7 @@ const handleAddTweet= (message) =>{
     // console.log(user)
 
   return (
+
     <main className={styles.main}>
         <div className={styles.left}>
         <Link href="/">
@@ -123,10 +123,11 @@ const handleAddTweet= (message) =>{
 
             <div>{tweets}</div>
         </div>
+
         <div className={styles.right}>
 
         <Hashtags />
-        
+
         </div>
     </main>
   );
