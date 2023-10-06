@@ -16,8 +16,7 @@ const tweetsData = useSelector(state=>state.tweets)
 
 const [msg, setMsg] = useState('')
 const [error, setError] = useState('');
-console.log(router)
-//redirection si non loggé
+
 
 const userFrame=<div>    
         <Image 
@@ -72,7 +71,7 @@ const message = <input onChange={handleMsgChange} value={msg} className={styles.
 //ajout d'un tweet en DB en passant le mail et le message + ajout au reducer tweets du tweet
 const handleAddTweet= (message) =>{
     if(user.token){
-        fetch('https://hackatweet-backend-rho.vercel.app/tweets/'),
+        fetch('https://hackatweet-backend-rho.vercel.app/tweets/add'),
           {
              method : 'POST',
              headers : {'Content-Type' : 'application/json'},
@@ -81,13 +80,14 @@ const handleAddTweet= (message) =>{
         .then(res=>res.json())
         .then(data=>{
             if(data[0].type === 'success'){
-                dispatch(addTweet())
+                console.log(data[3])
+                dispatch(addTweet(data[3]))
             }
         })
     }
 }
     console.log('tweets : ',tweets)
-    console.log(user)
+    // console.log(user)
 
   return (
     <main className={styles.main}>

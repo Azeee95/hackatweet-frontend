@@ -26,8 +26,22 @@ import { useDispatch, useSelector } from 'react-redux';
            method : 'DELETE',
         }
         )
-        .then()
+        .then(response=>response.json())
+        .then(data => )
     }
+
+    // let likeStyle = ''
+    // //check if tweet is liked by the user itself
+    // if(props.isLikedbyUser){
+    //     likeStyle = {color : red}
+    // }
+    // // check if tweet isLiked by at least one user at least
+    // else if(props.isLikedbyUser){
+    //     likeStyle = {color : white}
+    // }
+    // else{
+    //     likeStyle = {''}
+    // }
 
     return(
         <>
