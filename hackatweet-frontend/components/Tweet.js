@@ -3,11 +3,11 @@ import styles from '../styles/Board.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { deleteTweet } from '../reducers/tweets';
 
  const Tweet= (props) =>{
     const user = useSelector(state=>state.user.value)
-
+    const dispatch = useDispatch()
     const handleLike=()=>{
         //On like avec l'id de l'utilisateur (pros.useruid) & du tweet (props.tweetuid) route : /like/:tweetuid
         fetch(`https://hackatweet-backend-rho.vercel.app/tweets/like/${props.tweetuid}`,
@@ -27,7 +27,9 @@ import { useDispatch, useSelector } from 'react-redux';
         }
         )
         .then(response=>response.json())
-        .then(data => )
+        .then(data => {
+            dispatch(deleteTweet(props.tweetuid))
+        } )
     }
 
     // let likeStyle = ''

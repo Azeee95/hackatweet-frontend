@@ -10,7 +10,7 @@ name: 'tweets',
 initialState,
 reducers: { 
     addTweet: (state, action) => { state.value.push(action.payload) },
-    deleteTweet:(state)=>{state.value= state.value.filter(e=>e.tweetuid !== action.payload.tweetuid)} 
+    deleteTweet:(state, action)=>{state.value= state.value.filter(e=>e.tweetuid !== action.payload.tweetuid)} 
  },
 });
 export const { addTweet, deleteTweet } = tweetsSlice.actions;
