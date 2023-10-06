@@ -9,14 +9,15 @@ export const tweetsSlice = createSlice( {
 name: 'tweets',
 initialState,
 reducers: { 
-    addTweet: (state, action) => { state.value.push(action.payload) },
+
+    addTweet: (state, action) => { state.value.unshift(action.payload) },
     deleteTweet:(state, action)=>{state.value= state.value.filter(tweet=>action.payload !== tweet.tweetuid.toString())},
     resetTweets:(state, action)=>{state.value = initialState},
-    like:(state,action)=>{},
-    unLike:(state,action)=>{}
+    like:(state,action)=>{state.value.map(tweet=>tweet.tweetuid === action.payload.tweetuid && state.value.likes.push(action.payload.useruid))},
+    unLike:(state,action)=>{state.value.map(tweet=>tweet.tweetuid === action.payload.tweetuid && tweet.likes.filter(user=> user !== action.payload.useruid))}
  },
 });
-export const { addTweet, deleteTweet, resetTweets } = tweetsSlice.actions;
+export const { addTweet, deleteTweet, resetTweets, like, unLike } = tweetsSlice.actions;
 export default tweetsSlice.reducer;
 
 

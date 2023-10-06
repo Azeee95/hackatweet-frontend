@@ -27,7 +27,7 @@ tweetsData.map((item, i) => {
 
   })
   
-console.log('Kodzo Duplicated ', hashtagsDisplay);
+// console.log('Kodzo Duplicated ', hashtagsDisplay);
 
 function removeDuplicates(arr) {
 
@@ -43,7 +43,7 @@ function removeDuplicates(arr) {
 
 const hashtagsFinal = removeDuplicates(hashtagsDisplay);
 
-console.log(hashtagsFinal);
+// console.log(hashtagsFinal);
 
 
 

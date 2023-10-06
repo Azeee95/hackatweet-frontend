@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import {logout} from '../reducers/user'
 import Tweet from './Tweet';
 import Link from 'next/link'
-import {addTweet,resetTweets} from '../reducers/tweets'
+import {addTweet} from '../reducers/tweets'
 
 
 import Hashtags from './hashtags';
@@ -20,7 +20,6 @@ const tweetsData = useSelector(state=>state.tweets)
 
 const [msg, setMsg] = useState('')
 const [error, setError] = useState('');
-const now = new Date()
 
 const userFrame=<div>    
         <Image 
@@ -30,15 +29,16 @@ const userFrame=<div>
                 alt='user Avatar'
         />
 
-        <div>
+        <div className={styles.userInfo}>
             <h2>{user.email}</h2>
             <p> {user.firstname}</p>
+            <p></p>
         </div>
     </div>
 
 //on mount => fetch all tweets & store them in into tweetsData state
 useEffect(()=>{
-    // if(!user.token){router.push('/')}
+    if(!user.token){router.push('/')}
     fetch('https://hackatweet-backend-rho.vercel.app/tweets')
     .then(response=>response.json())
     .then(data=>{
@@ -50,8 +50,8 @@ useEffect(()=>{
 
 const tweets = tweetsData.value.map((data,i)=>      
 {
-    //isLikedByUser={isLikedByUser} add this bellow when liking handled
-  return <Tweet key={i} {...data} />;
+    console.log(data)
+  return <Tweet key={i} {...data} className={styles.tweets} />;
 })
 
 
@@ -74,7 +74,7 @@ const handleMsgChange = (event) => {
 const message = <input onChange={handleMsgChange} value={msg} className={styles.message} placeholder={'Type your amazing ideas to share with the world, make it short tho'}/>
 
 //ajout d'un tweet en DB en passant le mail et le message + ajout au reducer tweets du tweet
-const handleAddTweet= (message) =>{
+const handleAddTweet = (message) =>{
     console.log('add')
     if(user.token){
         console.log('has tokken')
@@ -86,16 +86,16 @@ const handleAddTweet= (message) =>{
           })
         .then(res=>res.json())
         .then(data=>{
-            console.log('resp addTweet : ',data)
+            // console.log('resp addTweet : ',data)
             if(data[2].type === 'success'){
-                console.log(data[3])
+                // console.log(data[3])
                 dispatch(addTweet(data[3]))
             }
         })
     }
 }
     console.log('tweets : ',tweets)
-    console.log(user.token)
+    // console.log(user.token)
   return (
 
     <main className={styles.main}>
@@ -117,8 +117,8 @@ const handleAddTweet= (message) =>{
             <div className={styles.top}>
             <h1>Home</h1>
                 {message}
-                <p>{msg.length}/280</p>
-                <div>
+                <div className={styles.tweetCtn}>
+                    <p>{msg.length}/280</p>
                     {error && <p style={{ color: 'red' }}>{error}</p>}
                     <button className={styles.tweetBtn} onClick={()=>handleAddTweet(msg)}>Tweet</button>
                 </div>
