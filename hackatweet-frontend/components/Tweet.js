@@ -2,19 +2,37 @@
 import styles from '../styles/Board.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+
 
  const Tweet= (props) =>{
+    const user = useSelector(state=>state.user.value)
+
     const handleLike=()=>{
-        //On like avec l'id de l'utilisateur (pros.useruid) & du tweet (props.tweetuid)
+        //On like avec l'id de l'utilisateur (pros.useruid) & du tweet (props.tweetuid) route : /like/:tweetuid
+        fetch(`https://hackatweet-backend-rho.vercel.app/tweets/like/${props.tweetuid}`,
+        {
+           method : 'PUT',
+           headers : {'Content-Type' : 'application/json'},
+           body: JSON.stringify({useruid : user.useruid})
+        }
+        )
     }
 
-    const handleDelete = (props)=>{
+    const handleDelete = () => {
         //on delete le tweet par props.tweetuid
+        fetch(`https://hackatweet-backend-rho.vercel.app/tweets/${props.tweetuid}`,
+        {
+           method : 'DELETE',
+        }
+        )
+        .then()
     }
 
     return(
         <>
         <div className={styles.userinfo}>
+            {/* Image pose problème lorsque appelé dans le composant ici */}
         {/* <Image 
                 src='/logo.png'
                 width={50}
@@ -27,7 +45,8 @@ import { faHeart, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
         <div className={styles.content}>
             <p>{props.message}</p>
-            <p>{props.hashtags}</p>
+                {/* à formater en ajoutant un espace (join(' ')) et un # devant chaque élément de hashtags */}
+            <p>{props.hashtags}</p> 
         </div>
 
         <div className={styles.actions}>
