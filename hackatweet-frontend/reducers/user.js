@@ -2,7 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';  
 	
 const initialState = { 
-    value: { token: null, email: null, useruid: null },
+    value: { token: null, email: null, useruid: null, firstname: null },
 };
 
 export const userSlice = createSlice( { 
@@ -13,6 +13,7 @@ reducers: {
         state.value.email = action.payload.email;
         state.value.token = action.payload.token;
         state.value.useruid = action.payload.useruid
+        state.value.firstname = action.payload.firstname
      },
     logout:(state)=>{state.value= initialState} 
  },

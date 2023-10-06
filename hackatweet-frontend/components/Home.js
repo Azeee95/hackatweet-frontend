@@ -13,6 +13,7 @@ function Home() {
 
   const dispatch = useDispatch()
   const router = useRouter()
+  
   //sign-up functions
   const [firstname, setFirstname] = useState('')
   const [emailUp, setEmailUp] = useState('')
@@ -33,7 +34,7 @@ function Home() {
       .then(data=>{
          if (data[0].type === 'success' ) {
             console.log(data)
-             dispatch(login({ email: data[1].email, token: data[1].token }));
+             dispatch(login({ email: data[1].email, token: data[1].token, firstname:data[1].firstname, useruid:data[1].useruid}));
              setFirstname('')
              setEmailUp('');
              setPasswordUp('');
@@ -58,7 +59,7 @@ function Home() {
       .then(res=>res.json())
       .then(data=>{
          if(data[0].type === 'success' ) {
-             dispatch(login({ email, token: data[1].token }));
+             dispatch(login({ email: data[1].email, token: data[1].token, firstname: data[1].firstname, useruid:data[1].useruid }));
              setEmail('');
              setPassword('');
              router.push('/board')

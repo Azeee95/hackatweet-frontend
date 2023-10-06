@@ -1,4 +1,3 @@
-
 import styles from '../styles/Board.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faTrashCan } from '@fortawesome/free-solid-svg-icons';
@@ -28,7 +27,10 @@ import { deleteTweet } from '../reducers/tweets';
         )
         .then(response=>response.json())
         .then(data => {
-            dispatch(deleteTweet(props.tweetuid))
+            console.log('result of delete : ', data)
+            console.log(data[1].tweetuid)
+            if(data[0].type === 'success')
+            dispatch(deleteTweet(data[1].tweetuid))
         } )
     }
 

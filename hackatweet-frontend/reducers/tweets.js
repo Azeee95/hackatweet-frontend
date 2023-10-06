@@ -10,10 +10,13 @@ name: 'tweets',
 initialState,
 reducers: { 
     addTweet: (state, action) => { state.value.push(action.payload) },
-    deleteTweet:(state, action)=>{state.value= state.value.filter(e=>e.tweetuid !== action.payload.tweetuid)} 
+    deleteTweet:(state, action)=>{state.value= state.value.filter(tweet=>action.payload !== tweet.tweetuid.toString())},
+    resetTweets:(state, action)=>{state.value = initialState},
+    like:(state,action)=>{},
+    unLike:(state,action)=>{}
  },
 });
-export const { addTweet, deleteTweet } = tweetsSlice.actions;
+export const { addTweet, deleteTweet, resetTweets } = tweetsSlice.actions;
 export default tweetsSlice.reducer;
 
 

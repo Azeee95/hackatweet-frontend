@@ -19,6 +19,7 @@
 
 .center{
     min-width: 45%;
+    width: 45%;
     border: 2px solid #3C454F;
 }
 
@@ -30,6 +31,7 @@
 .right {
     
     width: 100px;
+    max-width: 30%;
     border: 2px solid #3C454F;
 
     background-color: red;
