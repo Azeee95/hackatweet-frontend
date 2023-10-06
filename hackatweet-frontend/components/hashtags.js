@@ -11,10 +11,46 @@ function Hashtags() {
 
 const router = useRouter()
 const dispatch= useDispatch()
+
 const user= useSelector(state=>state.user.value)
+const tweetsData = useSelector(state=>state.tweets.value)
+
+let hashtagsDisplay = [];
+
+tweetsData.map((item, i) => {
+
+  item.hashtags.map((item2) => {
+
+    hashtagsDisplay.push(item2);
+
+  })
+
+  })
+  
+console.log('Kodzo Duplicated ', hashtagsDisplay);
+
+function removeDuplicates(arr) {
+
+  let unique = [];
+  arr.forEach(element => {
+      
+    if (!unique.includes(element)) {
+          unique.push(element);
+      }
+  });
+  return unique;
+}
+
+const hashtagsFinal = removeDuplicates(hashtagsDisplay);
+
+console.log(hashtagsFinal);
 
 
-const hastagsDisplay = [
+
+// console.log('Kodzo Tweets ', tweets);
+// console.log('Kodzo User ', user);
+
+const hastagsDisplay2 = [
 
     {
       name: 'standards',
@@ -47,7 +83,7 @@ const hastagsDisplay = [
     <main className={styles.main}>
         
     <ul role="list" className="divide-y divide-gray-100">
-      {hastagsDisplay.map((hashtag) => (
+      {hastagsDisplay2.map((hashtag) => (
         <li key={hashtag.name} className="flex justify-between gap-x-6 py-5">
           <div className="flex min-w-0 gap-x-4">
             <div className="min-w-0 flex-auto">

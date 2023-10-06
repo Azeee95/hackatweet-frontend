@@ -28,8 +28,11 @@
     border: 2px solid #3C454F;
 }
 
-.right{
-    min-width: 30%;
+.right {
+    
+    width: 100px;
     max-width: 30%;
     border: 2px solid #3C454F;
+
+    background-color: red;
 }
